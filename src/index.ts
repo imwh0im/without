@@ -68,6 +68,5 @@ export async function isSpam(
     }
   }
   
-
-  return true;
+  return false;
 }
