@@ -21,7 +21,6 @@ async function followRedirection(
   if (redirectionDepth <= 0) {
     return url;
   }
-
   try {
     const response = await fetch(url, { method: 'HEAD', redirect: 'follow' }) // 컨텐츠 내용은 필요하지 않으므로, method 는 HEAD
     const finalUrl = response.url;
@@ -46,7 +45,6 @@ export async function isSpam(
   spamLinkDomains: SpamLinkDomainsType,
   redirectionDepth: RedirectionDepthType,
 ): Promise<boolean> {
-
   // URL 패턴을 정규식으로 추출
   const urlList = content.match(/https?:\/\/[^\s]+/g);
 
@@ -54,19 +52,23 @@ export async function isSpam(
   if (!urlList) {
     return false
   }
+  // 탐색 최적화를 위해 Set 사용
+  const spamLinkDomainsSet = new Set(spamLinkDomains);
 
-  for (let url of urlList) {
-    try {
-      const finalUrl = await followRedirection(url, redirectionDepth);
-      const domain = parseDomain(finalUrl);
-  
-      if (spamLinkDomains.includes(domain)) {
-        return true;
-      }
-    } catch (err) {
-      throw new Error(`check error: ${err}`)
-    }
+  try {
+    // Promise.all 을 이용해서 병렬 처리
+    const checkPromises = urlList.map(url => {
+      return followRedirection(url, redirectionDepth);
+    });
+    const resultList = await Promise.all(checkPromises);
+
+    // 결과 값을 Set 에 탐색
+    const result = resultList.some((result) => {
+      const domain = parseDomain(result);
+      return spamLinkDomainsSet.has(domain);
+    })
+    return result;
+  } catch (err) {
+    throw new Error(`check error: ${err}`)
   }
-  
-  return false;
 }
