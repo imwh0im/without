@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/imwh0im/without/issues"
   },
-  "homepage": "https://github.com/imwh0im/without#readme"
+  "homepage": "https://github.com/imwh0im/without#readme",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
 }
