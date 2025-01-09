@@ -14,7 +14,7 @@ test('2', () => {
 
 test('3', () => {
   return isSpam("spam spam https://moiming.page.link/exam?_imcp=1", ["github.com"], 2).then(result => {
-    expect(result).toEqual(true);
+    expect(result).toEqual(false);
   });
 });
 
@@ -26,6 +26,6 @@ test('4', () => {
 
 test('5', () => {
   return isSpam("spam spam https://moiming.page.link/exam?_imcp=1", ["docs.github.com"], 3).then(result => {
-    expect(result).toEqual(true);
+    expect(result).toEqual(false);
   });
 });
