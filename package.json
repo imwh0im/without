@@ -1,0 +1,20 @@
+{
+  "name": "without",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imwh0im/without.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imwh0im/without/issues"
+  },
+  "homepage": "https://github.com/imwh0im/without#readme"
+}
